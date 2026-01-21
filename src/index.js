@@ -1,13 +1,22 @@
-const http = require('http');
-
+// src/index.js
+const express = require('express');
+const app = express();
 const PORT = 3000;
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Blogify API is running!');
+// 1. Import the new router (The "Department")
+const postRouter = require('./routes/posts.routes.js');
+
+app.get('/', (req, res) => {
+    res.send('Welcome to the Blogify API!');
 });
 
-server.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+// 2. Mount the router
+// This tells Express: "Any request starting with /api/v1/posts goes to postRouter"
+app.use('/api/v1/posts', postRouter);
+
+// OLD CODE REMOVED:
+// The app.get('/api/v1/posts'...) is gone. It lives in the router now.
+
+app.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}/`);
 });
