@@ -1,12 +1,14 @@
-// src/routes/posts.routes.js
+
 const express = require('express');
 const router = express.Router();
+const postController = require('../controllers/posts.controller.js');
 
-// 1. Import the controller
-const postsController = require('../controllers/posts.controller');
+console.log("Controllers found:", postController); // <--- Add this line
 
-// 2. Use the controller function
-// Notice we don't use () after getAllPosts. We are passing the function itself.
-router.get('/', postsController.getAllPosts);
+router.get('/:postId', postController.getPostById);
+
+// NEW: Route for a specific post using a parameter
+// The ':postId' must match the key you use in req.params
+router.get('/:postId', postController.getPostById);
 
 module.exports = router;

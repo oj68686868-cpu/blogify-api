@@ -1,11 +1,15 @@
-// src/controllers/posts.controller.js
 
-// This function handles the logic for fetching posts
-const getAllPosts = (req, res) => {
-    res.send('Fetching all blog posts from the modular router!');
+const getPostById = async (req, res) => {
+    // 1. Capture the 'postId' from the URL parameters
+    const { postId } = req.params;
+
+    // 2. Send back a confirmation response
+    res.status(200).json({
+        message: `Fetching data for post with ID: ${postId}`
+    });
 };
 
-// We export it as an object so we can add more functions later (like createPost)
 module.exports = {
-    getAllPosts,
+    // ... your other controllers like getAllPosts
+    getPostById
 };
