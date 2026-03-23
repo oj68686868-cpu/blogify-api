@@ -1,28 +1,48 @@
-// This file handles the LOGIC
-// We simulate a database with a simple array for now
-let posts = [
-  { id: 1, title: "My First Blog", content: "Hello World!" },
-  { id: 2, title: "MVC Pattern", content: "Separation of concerns is cool." }
-];
+// src/controllers/posts.controller.js
 
-export const getAllPosts = (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "Posts fetched successfully",
-    data: posts
-  });
+const Post = require('../models/posts.model.js');
+
+/**
+ * @desc    Get all posts
+ * @route   GET /api/v1/posts
+ * @access  Public
+ */
+const getAllPosts = async (req, res, next) => {
+  try {
+    const posts = await Post.find()
+      .populate('author', 'username email')
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      message: 'Posts fetched successfully',
+      count: posts.length,
+      data: posts,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const createPost = (req, res) => {
-  const newPost = {
-    id: posts.length + 1,
-    ...req.body
-  };
-  posts.push(newPost);
+/**
+ * @desc    Create a new post
+ * @route   POST /api/v1/posts
+ * @access  Public
+ */
+const createPost = async (req, res, next) => {
+  try {
+    const { title, content, author } = req.body;
 
-  res.status(201).json({
-    success: true,
-    message: "Post created successfully",
-    data: newPost
-  });
+    const post = await Post.create({ title, content, author });
+
+    res.status(201).json({
+      success: true,
+      message: 'Post created successfully',
+      data: post,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
+
+module.exports = { getAllPosts, createPost };

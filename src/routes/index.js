@@ -1,10 +1,18 @@
-import express from 'express';
-import postRoutes from './posts.routes.js';
+// src/routes/index.js
 
+const express = require('express');
 const router = express.Router();
 
-// Mount the posts routes under /posts
-// This effectively creates /api/v1/posts
-router.use('/posts', postRoutes);
+const postsRouter = require('./posts.routes.js');
+const authRouter = require('./auth.routes.js');
 
-export default router;
+// Health check
+router.get('/health', (req, res) => {
+    res.json({ success: true, message: 'Blogify API is running 🚀' });
+});
+
+// Mount routers
+router.use('/posts', postsRouter);       // /api/v1/posts
+router.use('/auth', authRouter);        // /api/v1/auth
+
+module.exports = router;

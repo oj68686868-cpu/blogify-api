@@ -1,10 +1,13 @@
-import express from 'express';
-import { getAllPosts, createPost } from '../controllers/posts.controller.js';
+// src/routes/posts.routes.js
 
+const express = require('express');
 const router = express.Router();
+const { getAllPosts, createPost } = require('../controllers/posts.controller.js');
 
-// Define routes relative to /posts
+// GET /api/v1/posts
 router.get('/', getAllPosts);
+
+// POST /api/v1/posts
 router.post('/', createPost);
 
-export default router;
+module.exports = router;
