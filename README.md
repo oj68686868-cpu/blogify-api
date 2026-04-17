@@ -2,7 +2,7 @@
 
 > A robust, RESTful API for a modern blogging platform with integrated payments and file management.
 
-**Live Demo:** [Add your deployed URL here if applicable]
+**Live Demo:** [Ready for Render Deployment]
 
 ---
 
